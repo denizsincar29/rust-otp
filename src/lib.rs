@@ -1,7 +1,7 @@
 #![crate_name="otp"]
 #![crate_type="lib"]
 
-use std::time::{SystemTime, SystemTimeError};
+use std::{time::{SystemTime, SystemTimeError}, fmt};
 use std::convert::TryInto;
 use data_encoding::{BASE32_NOPAD, DecodeError};
 use err_derive::Error;
