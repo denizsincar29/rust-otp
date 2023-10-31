@@ -69,6 +69,23 @@ pub fn make_totp(secret: &str, time_step: u64, skew: i64) -> Result<u32, Error> 
     }
 }
 
+#[derive(Clone, Copy)]
+pub enum OTPType {HOTP, TOTP}
+
+impl fmt::Display for OTPType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Self::HOTP => write!(f, "hotp"),
+            Self::TOTP => write!(f, "totp")
+        }
+    }
+}
+
+pub fn make_otp_uri(secret: &str, otp_type: OTPType, username: &str, issuer: &str) -> String {
+    format!("otpauth://{}/{}:{}?secret={}&issuer={}", otp_type, issuer, username, secret, issuer)
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::{make_hotp, make_totp_helper};
